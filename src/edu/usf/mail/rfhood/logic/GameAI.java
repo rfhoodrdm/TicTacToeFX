@@ -1,0 +1,50 @@
+package edu.usf.mail.rfhood.logic;
+
+import edu.usf.mail.rfhood.GameState;
+import edu.usf.mail.rfhood.logic.exception.DifficultyOutOfBoundsException;
+import edu.usf.mail.rfhood.logic.exception.GameAIException;
+
+public class GameAI {
+
+    /* **************************************************************
+                                Fields and Constants
+       ************************************************************** */
+
+    public static final int MIN_AI_LEVEL = 0;
+    public static final int MAX_AI_LEVEL = 2;
+
+    private Strategy randomStrategy;
+    private Strategy oneMoveStrategy;
+
+    /* **************************************************************
+                                Constructor/Initialization
+       ************************************************************** */
+
+    public GameAI() {
+        //initialize the various strategies available.
+        randomStrategy = new RandomStrategy();
+        oneMoveStrategy = new OneMoveStrategy();
+    }
+
+    /* **************************************************************
+                                API
+        ************************************************************** */
+
+    public void makeComputerMove( GameState gameState ) throws GameAIException {
+        //find out the difficulty level of the game, then defer to the appropriate strategy to make the computer move.
+        int difficultyLevel = gameState.getGameAILevel();
+        switch (difficultyLevel) {
+            case 2:
+            case 1:
+                oneMoveStrategy.makeComputerMove(gameState);
+                break;
+            case 0:
+                randomStrategy.makeComputerMove(gameState);
+                break;
+
+            default:    //error state: the difficulty level is set out of bounds.
+                throw new DifficultyOutOfBoundsException();
+        }
+    }
+
+}

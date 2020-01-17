@@ -1,0 +1,117 @@
+/*
+    Application background should be gray-ish, with two light "spotlight" effects
+    in upper-left and lower right corners.
+*/
+.app_background {
+    -fx-background-color:
+    rgba(75, 75, 75, 1),
+        radial-gradient(center 00% -00%, radius 135%, rgba(225,225,225,0.5) 0%, rgba(225,225,225,0) 50%),
+        radial-gradient(center 100% +100%, radius 135%, rgba(225,225,225,0.5) 0%, rgba(225,225,225,0) 50%);
+}
+
+
+/*
+    Styles for Game Labels
+*/
+
+.label {
+    -fx-font-weight:bold;
+    -fx-text-fill: white;
+}
+
+.human_or_cpu_label {
+    -fx-font-size: 14;
+}
+
+.x_player_human_or_cpu_label {
+    -fx-text-fill: #ee4411;
+    -fx-font-size: 18;
+}
+
+.o_player_human_or_cpu_label {
+    -fx-text-fill: blue;
+    -fx-font-size: 18;
+}
+
+
+/*
+    Styles for buttons.
+*/
+.navigation_button {
+    -fx-font-weight: bold;
+
+    /*  Borrowing on glass-gray button style by Jasper Potts */
+    -fx-background-color:
+        #c3c4c4,
+        linear-gradient(#b5b5b5 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 5;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+
+.navigation_button:pressed {
+    -fx-background-color:       #c3c4c4,
+                                 linear-gradient(#a5a5a5 30%, #ffffff 100%),
+                                 radial-gradient(center 50% -70%, radius 225%, #e6e6e6 45%, rgba(225,225,225,0) 50%);
+}
+
+
+.territory {
+    -fx-font-size: 68;
+    -fx-font-weight:bold;
+}
+
+.victory_territory {
+    -fx-background-color: radial-gradient(center 50% +50%, radius 100%, #ffffff 10%, #ff00ff 80%);
+}
+
+.x_territory {
+    -fx-text-fill: #ee4411;
+}
+
+.o_territory {
+    -fx-text-fill: blue;
+}
+
+
+
+/*
+    Text area for instructions should be see-through so that the
+    background shows up nicely.
+*/
+
+.instructions {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.instructions {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.instructions .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.instructions .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.instructions .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+
+/*
+    Styles for the CPU difficulty widgets on the game board.
+*/
+
+.cpu_level_slider .axis {
+    -fx-tick-label-fill: white;
+}
+
