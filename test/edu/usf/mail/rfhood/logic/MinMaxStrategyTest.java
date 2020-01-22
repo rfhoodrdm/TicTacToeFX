@@ -22,6 +22,13 @@ public class MinMaxStrategyTest {
     GameBoard terminalGameBoardDraw;        //end-of-game state where no one wins.
     GameBoard terminalGameBoardOWins;       //end-of-game state where O wins.
 
+    //game board states for games several moves in
+    GameBoard midGameBoardOToWin;          //mid-game board position, with O winning on 1 of 2 possible moves.
+    GameBoard midGameBoardXHasAdvantage;   //mid-game board position, with X having a path to victory.
+
+    //Early game boards.
+    GameBoard gameStartBoard;               //reference to a blank board with no moves on it.
+
 
     /* **************************************************************
                                 TEST SETUP
@@ -87,6 +94,53 @@ public class MinMaxStrategyTest {
         terminalGameBoardDraw.setPositionState(MID_LEFT,         O);
         terminalGameBoardDraw.setPositionState(BOTTOM_CENTER,    O);
 
+
+        // Mid-game position, with X as the turn player having a path to victory.
+        //     X | O | O
+        //    ---+---+---
+        //     O |   | X
+        //    ---+---+---
+        //     X |   |
+        midGameBoardXHasAdvantage = new GameBoard();
+
+        // X positions.
+        midGameBoardXHasAdvantage.setPositionState(TOP_LEFT,      X);
+        midGameBoardXHasAdvantage.setPositionState(MID_RIGHT,     X);
+        midGameBoardXHasAdvantage.setPositionState(BOTTOM_LEFT,   X);
+
+        // O positions.
+        midGameBoardXHasAdvantage.setPositionState(TOP_CENTER,       O);
+        midGameBoardXHasAdvantage.setPositionState(TOP_RIGHT,        O);
+        midGameBoardXHasAdvantage.setPositionState(MID_LEFT,         O);
+
+
+        // Mid-game position, with O to win as the turn player in 1 of 2 possible moves.
+        //     X | O | O
+        //    ---+---+---
+        //       | X | O
+        //    ---+---+---
+        //     X | X |
+        midGameBoardOToWin = new GameBoard();
+
+        // X positions.
+        midGameBoardOToWin.setPositionState(TOP_LEFT,      X);
+        midGameBoardOToWin.setPositionState(MID_CENTER,    X);
+        midGameBoardOToWin.setPositionState(BOTTOM_LEFT,   X);
+        midGameBoardOToWin.setPositionState(BOTTOM_CENTER, X);
+
+        // O positions.
+        midGameBoardOToWin.setPositionState(TOP_CENTER,       O);
+        midGameBoardOToWin.setPositionState(TOP_RIGHT,        O);
+        midGameBoardOToWin.setPositionState(MID_RIGHT,        O);
+
+
+        //blank, starting position game board.
+        //       |   |
+        //    ---+---+---
+        //       |   |
+        //    ---+---+---
+        //       |   |
+        gameStartBoard = new GameBoard();
     }
 
 
@@ -153,6 +207,62 @@ public class MinMaxStrategyTest {
         assertEquals( -1, oLosesOpposingPlayer );
         assertEquals( 0, oDrawsTurnPlayer );
         assertEquals( 0, oDrawsOpposingPlayer );
+    }
+
+    /**
+     * Expect to score a 1 for a position for X with X as the turn player, and a possible way for X to force a win.
+     * Expect to score a -1 for a position for O with X as the turn player, and a possible way for X to force a win.
+     */
+    @Test
+    public void scoreGameBoard_correctlyRateGameWithXPathToVictory() {
+
+        //test
+        int xScoreXToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, X, true );
+        int oScoreXToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, O, false);
+
+        //verify
+        assertEquals( 1, xScoreXToMoveWithVictoryPath );
+        assertEquals( -1, oScoreXToMoveWithVictoryPath );
+
+    }
+
+
+    /**
+     * Expect to score 1 in a position as O with O as the turn player, and a possible way for O to win.
+     * Expect to score -1 in a position as X with O as the turn player, and a possible way for O to win.
+     */
+    @Test
+    public void scoreGameBoard_correctlyRateLateGameWithOToWin() {
+
+        //test
+        int oScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, O, true);
+        int xScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, X, false);
+
+        //verify
+        assertEquals( 1, oScoreOToMoveWithVictoryPath );
+        assertEquals( -1, xScoreOToMoveWithVictoryPath );
+    }
+
+
+    /**
+     * No matter who goes first or which player is scoring a blank game board, the result should always be 0.
+     * This is because the expected result for a perfect game of tic tac toe is always a draw.
+     */
+    @Test
+    public void scoreGameBoard_BlankGameBoardShouldBeDrawGame() {
+
+        //test
+        int xScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, true);
+        int xScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, false);
+        int oScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, true);
+        int oScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, false);
+
+        //verify
+        assertEquals( 0, xScoreXToMoveFirstBlankGame );
+        assertEquals( 0, xScoreOToMoveFirstBlankGame );
+        assertEquals( 0, oScoreOToMoveFirstBlankGame );
+        assertEquals( 0, oScoreXToMoveFirstBlankGame );
+
     }
 
 

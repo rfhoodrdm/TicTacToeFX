@@ -22,6 +22,7 @@ public class GameBoard {
 
     public GameBoard() {
         positionStates = new GameState.POSITION_STATE[3][3];
+        clearGameBoard();
     }
 
     /* **************************************************************

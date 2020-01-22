@@ -124,8 +124,8 @@ public class MinMaxStrategy extends Strategy {
                 //clone the game board, make the tentative move, and test the move by scoring the new board.
                 //if the score is a new best we've seen, remember it.
                 GameBoard tentativeGameBoard = gameBoard.clone();
-                tentativeGameBoard.setPositionState( moveToMake.column, moveToMake.row, playerMarker);
-                int tentativeMoveScore = scoreGameBoard( tentativeGameBoard, opponentMarker, false);
+                tentativeGameBoard.setPositionState( moveToMake, playerMarker);
+                int tentativeMoveScore = -1 * scoreGameBoard( tentativeGameBoard, opponentMarker, false);
                 if ( tentativeMoveScore > bestBoardScore ) {
                     bestBoardScore = tentativeMoveScore;
                 }
@@ -141,8 +141,8 @@ public class MinMaxStrategy extends Strategy {
                 //clone the game board, make the tentative move, and test the move by scoring the new board.
                 //if the score is a new worse we've seen, remember it.
                 GameBoard tentativeGameBoard = gameBoard.clone();
-                tentativeGameBoard.setPositionState( moveToMake.column, moveToMake.row, opponentMarker);
-                int tentativeMoveScore = scoreGameBoard( tentativeGameBoard, playerMarker, true);
+                tentativeGameBoard.setPositionState( moveToMake, opponentMarker);
+                int tentativeMoveScore = -1 * scoreGameBoard( tentativeGameBoard, playerMarker, true);
                 if ( tentativeMoveScore < worstBoardScore ) {
                     worstBoardScore = tentativeMoveScore;
                 }
