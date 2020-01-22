@@ -1,6 +1,6 @@
 package edu.usf.mail.rfhood.logic;
 
-import edu.usf.mail.rfhood.GameState;
+import edu.usf.mail.rfhood.state.GameState;
 import edu.usf.mail.rfhood.logic.exception.GameAIException;
 import edu.usf.mail.rfhood.logic.exception.NoAvailableMovesException;
 import edu.usf.mail.rfhood.logic.exception.PlayerCannotMoveNowException;

@@ -2,6 +2,7 @@ package edu.usf.mail.rfhood;
 
 import edu.usf.mail.rfhood.logic.GameAI;
 import edu.usf.mail.rfhood.logic.exception.GameAIException;
+import edu.usf.mail.rfhood.state.GameState;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -16,8 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static edu.usf.mail.rfhood.SceneDirectory.SCENE_NAME.TITLE_SCENE;
-import static edu.usf.mail.rfhood.GameState.POSITION_STATE.*;
-import static java.util.logging.Level.*;
+import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.*;
 
 public class GameScreenController {
 

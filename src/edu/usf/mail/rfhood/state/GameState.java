@@ -1,10 +1,8 @@
-package edu.usf.mail.rfhood;
+package edu.usf.mail.rfhood.state;
 
 import edu.usf.mail.rfhood.logic.GameAI;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class GameState {
@@ -199,17 +197,7 @@ public class GameState {
      * @return
      */
     public Set<POSITIONS> getUnclaimedPositions() {
-
-        //get the state of the given position from the board. If it's unclaimed, it's a potential move.
-        Set<POSITIONS> unclaimedPositions = new HashSet<>();
-        for (GameState.POSITIONS currentPosition : GameState.POSITIONS.values() ) {
-            GameState.POSITION_STATE currentPositionState = getPositionState(currentPosition.column, currentPosition.row);
-            if (GameState.POSITION_STATE.UNCLAIMED == currentPositionState) {
-                unclaimedPositions.add(currentPosition);
-            }
-        }
-
-        return unclaimedPositions;
+        return gameBoard.getUnclaimedPositions();
     }
 
     /* **************************************************************

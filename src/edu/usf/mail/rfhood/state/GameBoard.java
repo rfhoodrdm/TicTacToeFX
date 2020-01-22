@@ -1,4 +1,7 @@
-package edu.usf.mail.rfhood;
+package edu.usf.mail.rfhood.state;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The GameBoard class represents all of the tic-tac-toe grid positions
@@ -58,6 +61,16 @@ public class GameBoard {
     public boolean setPositionState(int column, int row, GameState.POSITION_STATE newState ) {
         positionStates[column][row] = newState;
         return true;
+    }
+
+    /**
+     * Overload method for setPositionState. Takes a whole position instead of just coordinates.
+     * @param position
+     * @param newState
+     * @return
+     */
+    public boolean setPositionState( GameState.POSITIONS position, GameState.POSITION_STATE newState ) {
+        return setPositionState(position.column, position.row, newState );
     }
 
     /**
@@ -164,5 +177,22 @@ public class GameBoard {
 
         //if we haven't found a winner yet, return false.
         return false;
+    }
+
+    /**
+     * Get the set of positions on the game board which haven't been claimed by either player.
+     * @return
+     */
+    public Set<GameState.POSITIONS> getUnclaimedPositions() {
+        //get the state of the given position from the board. If it's unclaimed, it's a potential move.
+        Set<GameState.POSITIONS> unclaimedPositions = new HashSet<>();
+        for (GameState.POSITIONS currentPosition : GameState.POSITIONS.values() ) {
+            GameState.POSITION_STATE currentPositionState = getPositionState(currentPosition.column, currentPosition.row);
+            if (GameState.POSITION_STATE.UNCLAIMED == currentPositionState) {
+                unclaimedPositions.add(currentPosition);
+            }
+        }
+
+        return unclaimedPositions;
     }
 }
