@@ -5,6 +5,8 @@ import edu.usf.mail.rfhood.state.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
+import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
 import static edu.usf.mail.rfhood.state.GameState.POSITIONS.*;
 import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.O;
 import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.X;
@@ -157,72 +159,62 @@ public class MinMaxStrategyTest {
     }
 
     /**
-     *  Expect a score of 1 for X in a terminal position where X wins.
-     *  Expect a score of -1 for X in a terminal position where O wins.
-     *  Expect a score of 0 for X in a terminal position draw game.
-     *  Shouldn't matter if X is the current turn player or not.
+     *  If turn player wins, and we're maxing values, then return 1.
+     *  If opposing player wins, and we're mining values, then return -1.
+     *  If turn player loses, and we're mining values, then return 1;
+     *  If opposing player loses, and we're maxing values, then return -1;
      */
     @Test
-    public void scoreGameBoard_correctlyRateTerminalPositionForX() {
+    public void scoreGameBoard_correctlyRateTerminalPositions() {
 
         //test
-        int xWinTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardXWins, X, true);
-        int xWinOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardXWins, X, false);
-        int xLosesTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardOWins, X, true);
-        int xLosesOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardOWins, X, false);
-        int xDrawsTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardDraw, X, true);
-        int xDrawsOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardDraw, X, false);
+        int xPlayerXVictoryMaxing = classUnderTest.scoreGameBoard(terminalGameBoardXWins, X, MAX);
+        int xPlayerXVictoryMining = classUnderTest.scoreGameBoard(terminalGameBoardXWins, X, MIN);
+        int xPlayerOVictoryMaxing = classUnderTest.scoreGameBoard(terminalGameBoardOWins, X, MAX);
+        int xPlayerOVictoryMining = classUnderTest.scoreGameBoard(terminalGameBoardOWins, X, MIN);
+
+        int oPlayerXVictoryMaxing = classUnderTest.scoreGameBoard(terminalGameBoardXWins, O, MAX);
+        int oPlayerXVictoryMining = classUnderTest.scoreGameBoard(terminalGameBoardXWins, O, MIN);
+        int oPlayerOVictoryMaxing = classUnderTest.scoreGameBoard(terminalGameBoardOWins, O, MAX);
+        int oPlayerOVictoryMining = classUnderTest.scoreGameBoard(terminalGameBoardOWins, O, MIN);
+
+        int xPlayerDrawGameMaxing = classUnderTest.scoreGameBoard(terminalGameBoardDraw, X, MAX);
+        int xPlayerDrawGameMining = classUnderTest.scoreGameBoard(terminalGameBoardDraw, X, MIN);
+        int oPlayerDrawGameMaxing = classUnderTest.scoreGameBoard(terminalGameBoardDraw, O, MAX);
+        int oPlayerDrawGameMining = classUnderTest.scoreGameBoard(terminalGameBoardDraw, O, MIN);
 
         //verify
-        assertEquals( 1, xWinTurnPlayer);
-        assertEquals( 1, xWinOpposingPlayer );
-        assertEquals( -1, xLosesTurnPlayer );
-        assertEquals( -1, xLosesOpposingPlayer );
-        assertEquals( 0, xDrawsTurnPlayer );
-        assertEquals( 0, xDrawsOpposingPlayer );
+        assertEquals( 1, xPlayerXVictoryMaxing);
+        assertEquals( -1, xPlayerXVictoryMining );
+        assertEquals( -1, xPlayerOVictoryMaxing );
+        assertEquals( 1, xPlayerOVictoryMining );
+
+        assertEquals( -1, oPlayerXVictoryMaxing);
+        assertEquals( 1, oPlayerXVictoryMining );
+        assertEquals( 1, oPlayerOVictoryMaxing );
+        assertEquals( -1, oPlayerOVictoryMining );
+
+        assertEquals( 0, xPlayerDrawGameMaxing );
+        assertEquals( 0, xPlayerDrawGameMining );
+        assertEquals( 0, oPlayerDrawGameMaxing );
+        assertEquals( 0, oPlayerDrawGameMining );
 
     }
 
     /**
-     *  Expect a score of 1 for O in a terminal position where O wins.
-     *  Expect a score of -1 for O in a terminal position where X wins.
-     *  Expect a score of 0 for O in a terminal position draw game.
-     *  Shouldn't matter if O is the current turn player or not.
-     */
-    @Test
-    public void scoreGameBoard_correctlyRateTerminalPositionForO() {
-
-        //test
-        int oWinTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardOWins, O, true);
-        int oWinOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardOWins, O, false);
-        int oLosesTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardXWins, O, true);
-        int oLosesOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardXWins, O, false);
-        int oDrawsTurnPlayer = classUnderTest.scoreGameBoard(terminalGameBoardDraw, O, true);
-        int oDrawsOpposingPlayer = classUnderTest.scoreGameBoard(terminalGameBoardDraw, O, false);
-
-        //verify
-        assertEquals( 1, oWinTurnPlayer);
-        assertEquals( 1, oWinOpposingPlayer );
-        assertEquals( -1, oLosesTurnPlayer );
-        assertEquals( -1, oLosesOpposingPlayer );
-        assertEquals( 0, oDrawsTurnPlayer );
-        assertEquals( 0, oDrawsOpposingPlayer );
-    }
-
-    /**
-     * Expect to score a 1 for a position for X with X as the turn player, and a possible way for X to force a win.
-     * Expect to score a -1 for a position for O with X as the turn player, and a possible way for X to force a win.
+     * For a position which favors an X victory, should score highly for an X move when maxing,
+     * and conversely, should score low for an X move when mining.
      */
     @Test
     public void scoreGameBoard_correctlyRateGameWithXPathToVictory() {
 
         //test
-        int xScoreXToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, X, true );
-        int oScoreXToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, O, false);
+        int scoreForXMoveWhenMaxing = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, X, MAX );
+        int scoreForXMoveWhenMining = classUnderTest.scoreGameBoard(midGameBoardXHasAdvantage, X, MIN );
 
         //verify
-        assertEquals( 1, xScoreXToMoveWithVictoryPath );
-        assertEquals( -1, oScoreXToMoveWithVictoryPath );
+        assertEquals( 1, scoreForXMoveWhenMaxing );
+        assertEquals( -1, scoreForXMoveWhenMining );
 
     }
 
@@ -235,8 +227,8 @@ public class MinMaxStrategyTest {
     public void scoreGameBoard_correctlyRateLateGameWithOToWin() {
 
         //test
-        int oScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, O, true);
-        int xScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, X, false);
+        int oScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, O, MAX);
+        int xScoreOToMoveWithVictoryPath = classUnderTest.scoreGameBoard(midGameBoardOToWin, X, MIN);
 
         //verify
         assertEquals( 1, oScoreOToMoveWithVictoryPath );
@@ -252,10 +244,10 @@ public class MinMaxStrategyTest {
     public void scoreGameBoard_BlankGameBoardShouldBeDrawGame() {
 
         //test
-        int xScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, true);
-        int xScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, false);
-        int oScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, true);
-        int oScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, false);
+        int xScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, MAX);
+        int xScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, X, MIN);
+        int oScoreOToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, MAX);
+        int oScoreXToMoveFirstBlankGame = classUnderTest.scoreGameBoard(gameStartBoard, O, MIN);
 
         //verify
         assertEquals( 0, xScoreXToMoveFirstBlankGame );
