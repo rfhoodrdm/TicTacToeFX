@@ -22,9 +22,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="instructionsPlayButton" maxHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#handlePlayButtonClick" prefHeight="50.0" styleClass="navigation_button" text="Play a Game" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <Button fx:id="instructionsBackButton" maxHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBackToTitleButtonClick" prefHeight="50.0" styleClass="navigation_button" text="Back to Title" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-            <GridPane GridPane.columnIndex="1" GridPane.rowSpan="2">
+            <Button fx:id="instructionsPlayButton" maxHeight="50.0" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#handlePlayButtonClick" prefHeight="50.0" styleClass="navigation_button" text="Play" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <Button fx:id="instructionsBackButton" maxHeight="50.0" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleBackToTitleButtonClick" prefHeight="50.0" styleClass="navigation_button" text="Back" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+            <GridPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
