@@ -1,11 +1,9 @@
 package edu.usf.mail.rfhood.logic;
 
-import edu.usf.mail.rfhood.GameState;
+import edu.usf.mail.rfhood.state.GameState;
 import edu.usf.mail.rfhood.logic.exception.AttemptedCPUMoveFailedException;
 import edu.usf.mail.rfhood.logic.exception.GameAIException;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 

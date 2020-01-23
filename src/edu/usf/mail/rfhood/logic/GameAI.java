@@ -1,6 +1,6 @@
 package edu.usf.mail.rfhood.logic;
 
-import edu.usf.mail.rfhood.GameState;
+import edu.usf.mail.rfhood.state.GameState;
 import edu.usf.mail.rfhood.logic.exception.DifficultyOutOfBoundsException;
 import edu.usf.mail.rfhood.logic.exception.GameAIException;
 
@@ -15,6 +15,7 @@ public class GameAI {
 
     private Strategy randomStrategy;
     private Strategy oneMoveStrategy;
+    private Strategy minMaxStrategy;
 
     /* **************************************************************
                                 Constructor/Initialization
@@ -24,6 +25,7 @@ public class GameAI {
         //initialize the various strategies available.
         randomStrategy = new RandomStrategy();
         oneMoveStrategy = new OneMoveStrategy();
+        minMaxStrategy = new MinMaxStrategy();
     }
 
     /* **************************************************************
@@ -35,6 +37,8 @@ public class GameAI {
         int difficultyLevel = gameState.getGameAILevel();
         switch (difficultyLevel) {
             case 2:
+                minMaxStrategy.makeComputerMove(gameState);
+                break;
             case 1:
                 oneMoveStrategy.makeComputerMove(gameState);
                 break;

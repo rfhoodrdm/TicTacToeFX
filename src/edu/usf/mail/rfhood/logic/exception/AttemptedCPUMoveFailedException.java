@@ -1,6 +1,6 @@
 package edu.usf.mail.rfhood.logic.exception;
 
-import edu.usf.mail.rfhood.GameState;
+import edu.usf.mail.rfhood.state.GameState;
 
 public class AttemptedCPUMoveFailedException extends GameAIException {
 

@@ -1,10 +1,8 @@
-package edu.usf.mail.rfhood;
+package edu.usf.mail.rfhood.state;
 
 import edu.usf.mail.rfhood.logic.GameAI;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class GameState {
@@ -13,7 +11,7 @@ public class GameState {
                                 Fields and Constants
        ************************************************************** */
 
-    private POSITION_STATE[][] positionStates;  //states for each game board position, by column and row.
+    private GameBoard gameBoard;                //current state of the game board.
 
     private boolean[][] victoryConfiguration;   //marker for if the position in question is part of the win configuration.
 
@@ -44,13 +42,9 @@ public class GameState {
     public void resetState(boolean xPlayerControlledSetting, boolean oPlayerControlledSetting, int gameAILevelSetting) {
         gamePhase = GAME_PHASE.NEW_GAME;
 
-        //clear game board.
-        positionStates = new POSITION_STATE[3][3];
-        for ( int column = 0;  column < 3;  ++column) {
-            for ( int row = 0;  row < 3;  ++row ) {
-                positionStates[column][row] = POSITION_STATE.UNCLAIMED;
-            }
-        }
+        //make a new game board and clear it.
+        gameBoard = new GameBoard();
+        gameBoard.clearGameBoard();
 
         //clear marked winner positions.
         victoryConfiguration = new boolean[3][3];
@@ -90,10 +84,10 @@ public class GameState {
     public boolean claimTerritory(POSITION_STATE potentialState, int column, int row) {
 
         //first, get check the state in question. If the state is anything but unclaimed, then we fail immediately.
-        if ( POSITION_STATE.UNCLAIMED != positionStates[column][row] ) { return false; }
+        if ( POSITION_STATE.UNCLAIMED != gameBoard.getPositionState(column, row) ) { return false; }
 
         //else, we mark the territory as now claimed.
-        positionStates[column][row] = potentialState;
+        gameBoard.setPositionState(column, row, potentialState);
         return true;
     }
 
@@ -142,9 +136,7 @@ public class GameState {
     private boolean checkForVictory( POSITION_STATE marker ) {
         //check each column
         for ( int column = 0;  column < 3;  ++column ) {
-            if ( positionStates[column][0] == marker  &&
-                    positionStates[column][1] == marker  &&
-                    positionStates[column][2] == marker ) {
+            if ( gameBoard.checkVictoryOnColumn(column, marker) ) {
                 //three in a row found!
                 victoryConfiguration[column][0] = true;  victoryConfiguration[column][1] = true;  victoryConfiguration[column][2] = true;
                 return true;
@@ -153,9 +145,7 @@ public class GameState {
 
         //check each row
         for ( int row = 0;  row < 3;  ++row ) {
-            if ( positionStates[0][row] == marker  &&
-                    positionStates[1][row] == marker  &&
-                    positionStates[2][row] == marker ) {
+            if ( gameBoard.checkVictoryOnRow(row, marker) ) {
                 //three in a row found!
                 victoryConfiguration[0][row] = true;  victoryConfiguration[1][row] = true;  victoryConfiguration[2][row] = true;
                 return true;
@@ -163,18 +153,14 @@ public class GameState {
         }
 
         //check diagonal #1
-        if (    positionStates[0][0] == marker  &&
-                positionStates[1][1] == marker  &&
-                positionStates[2][2] == marker ) {
+        if (    gameBoard.checkVictoryOnForwardDiagonal(marker) ) {
             //three in a row found!
             victoryConfiguration[0][0] = true;  victoryConfiguration[1][1] = true;  victoryConfiguration[2][2] = true;
             return true;
         }
 
         //check diagonal #2
-        if (    positionStates[2][0] == marker  &&
-                positionStates[1][1] == marker  &&
-                positionStates[0][2] == marker ) {
+        if (    gameBoard.checkVictoryOnBackwardDiagonal(marker) ) {
             //three in a row found!
             victoryConfiguration[2][0] = true;  victoryConfiguration[1][1] = true;  victoryConfiguration[0][2] = true;
             return true;
@@ -189,7 +175,7 @@ public class GameState {
         // since we check elsewhere for victory, we only check for a full game board here.
         for ( int column = 0;  column < 3;  ++column ) {
             for (int row = 0;  row < 3;  ++row ) {
-                if ( POSITION_STATE.UNCLAIMED == positionStates[column][row] ) {
+                if ( POSITION_STATE.UNCLAIMED == gameBoard.getPositionState(column, row) ) {
                     return false;
                 }
             }
@@ -211,17 +197,7 @@ public class GameState {
      * @return
      */
     public Set<POSITIONS> getUnclaimedPositions() {
-
-        //get the state of the given position from the board. If it's unclaimed, it's a potential move.
-        Set<POSITIONS> unclaimedPositions = new HashSet<>();
-        for (GameState.POSITIONS currentPosition : GameState.POSITIONS.values() ) {
-            GameState.POSITION_STATE currentPositionState = getPositionState(currentPosition.column, currentPosition.row);
-            if (GameState.POSITION_STATE.UNCLAIMED == currentPositionState) {
-                unclaimedPositions.add(currentPosition);
-            }
-        }
-
-        return unclaimedPositions;
+        return gameBoard.getUnclaimedPositions();
     }
 
     /* **************************************************************
@@ -233,7 +209,7 @@ public class GameState {
     public POSITION_STATE getPositionState( int column, int row ) {
         //check boundaries. If within the game board, return that position's state. If not, return OUT_OF_BOUNDS so we don't return null.
         if ( column >= 0  &&  column < 3  &&  row >= 0  &&  row < 3 ) {
-            return positionStates[column][row];
+            return gameBoard.getPositionState(column, row);
         }
 
         return POSITION_STATE.OUT_OF_BOUNDS;
@@ -251,6 +227,10 @@ public class GameState {
     }
 
     public int getGameAILevel() { return gameAILevel; }
+
+    public GameBoard getGameBoard() {
+        return gameBoard.clone();       //return copy of game board to prevent improper access.
+    }
 
     /* **************************************************************
                                 Enums/Inner Classes
