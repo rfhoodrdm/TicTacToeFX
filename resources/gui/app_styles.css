@@ -33,6 +33,10 @@
     -fx-font-size: 18;
 }
 
+.hyperlink {
+    -fx-font-weight:bold;
+}
+
 
 /*
     Styles for buttons.
