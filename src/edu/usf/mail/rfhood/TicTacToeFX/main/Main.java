@@ -1,12 +1,12 @@
-package edu.usf.mail.rfhood.main;
+package edu.usf.mail.rfhood.TicTacToeFX.main;
 
-import edu.usf.mail.rfhood.SceneDirectory;
+import edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import static edu.usf.mail.rfhood.SceneDirectory.SCENE_NAME.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.*;
 
 public class Main extends Application {
 
@@ -33,17 +33,17 @@ public class Main extends Application {
         sceneDirectory = SceneDirectory.getInstance();
 
         //title scene
-        Parent title = FXMLLoader.load(getClass().getClassLoader().getResource("edu/usf/mail/rfhood/title_screen.fxml"));
+        Parent title = FXMLLoader.load(getClass().getClassLoader().getResource("gui/title_screen.fxml"));
         Scene titleScene = new Scene(title, APP_WIDTH, APP_HEIGHT);
         sceneDirectory.registerScene(TITLE_SCENE, titleScene);
 
         //game board scene
-        Parent gameBoard = FXMLLoader.load(getClass().getClassLoader().getResource("edu/usf/mail/rfhood/game_screen.fxml"));
+        Parent gameBoard = FXMLLoader.load(getClass().getClassLoader().getResource("gui/game_screen.fxml"));
         Scene gameBoardScene = new Scene(gameBoard, APP_WIDTH, APP_HEIGHT);
         sceneDirectory.registerScene(GAME_BOARD_SCENE, gameBoardScene);
 
         //instructions scene
-        Parent instructions = FXMLLoader.load(getClass().getClassLoader().getResource("edu/usf/mail/rfhood/instruction_screen.fxml"));
+        Parent instructions = FXMLLoader.load(getClass().getClassLoader().getResource("gui/instruction_screen.fxml"));
         Scene instructionScene = new Scene(instructions, APP_WIDTH, APP_HEIGHT);
         sceneDirectory.registerScene(INSTRUCTIONS_SCENE, instructionScene);
     }

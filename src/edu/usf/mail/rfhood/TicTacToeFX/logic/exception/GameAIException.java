@@ -1,4 +1,4 @@
-package edu.usf.mail.rfhood.logic.exception;
+package edu.usf.mail.rfhood.TicTacToeFX.logic.exception;
 
 public abstract class GameAIException extends Exception {
 

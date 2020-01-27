@@ -1,6 +1,6 @@
-package edu.usf.mail.rfhood.logic.exception;
+package edu.usf.mail.rfhood.TicTacToeFX.logic.exception;
 
-import edu.usf.mail.rfhood.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
 
 public class AttemptedCPUMoveFailedException extends GameAIException {
 
