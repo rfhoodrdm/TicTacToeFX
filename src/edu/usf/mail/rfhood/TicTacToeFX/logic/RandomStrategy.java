@@ -1,8 +1,8 @@
-package edu.usf.mail.rfhood.logic;
+package edu.usf.mail.rfhood.TicTacToeFX.logic;
 
-import edu.usf.mail.rfhood.state.GameState;
-import edu.usf.mail.rfhood.logic.exception.AttemptedCPUMoveFailedException;
-import edu.usf.mail.rfhood.logic.exception.GameAIException;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.AttemptedCPUMoveFailedException;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.GameAIException;
 
 import java.util.Set;
 

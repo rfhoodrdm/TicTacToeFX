@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="sceneBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="app_background" stylesheets="@app_styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.usf.mail.rfhood.InstructionScreenController">
+<BorderPane fx:id="sceneBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="app_background" stylesheets="@app_styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.usf.mail.rfhood.TicTacToeFX.gui.InstructionScreenController">
    <bottom>
       <GridPane hgap="5.0" maxHeight="125.0" minHeight="125.0" prefHeight="125.0" vgap="5.0" BorderPane.alignment="CENTER">
         <columnConstraints>

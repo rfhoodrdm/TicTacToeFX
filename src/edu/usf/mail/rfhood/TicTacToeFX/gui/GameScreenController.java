@@ -1,8 +1,8 @@
-package edu.usf.mail.rfhood;
+package edu.usf.mail.rfhood.TicTacToeFX.gui;
 
-import edu.usf.mail.rfhood.logic.GameAI;
-import edu.usf.mail.rfhood.logic.exception.GameAIException;
-import edu.usf.mail.rfhood.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.GameAI;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.GameAIException;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -16,8 +16,8 @@ import javafx.util.StringConverter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static edu.usf.mail.rfhood.SceneDirectory.SCENE_NAME.TITLE_SCENE;
-import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.TITLE_SCENE;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.*;
 
 public class GameScreenController {
 

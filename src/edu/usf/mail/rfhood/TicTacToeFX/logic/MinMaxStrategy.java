@@ -1,18 +1,17 @@
-package edu.usf.mail.rfhood.logic;
+package edu.usf.mail.rfhood.TicTacToeFX.logic;
 
-import edu.usf.mail.rfhood.logic.exception.AttemptedCPUMoveFailedException;
-import edu.usf.mail.rfhood.logic.exception.GameAIException;
-import edu.usf.mail.rfhood.logic.exception.NoAvailableMovesException;
-import edu.usf.mail.rfhood.state.GameBoard;
-import edu.usf.mail.rfhood.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.AttemptedCPUMoveFailedException;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.GameAIException;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.NoAvailableMovesException;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameBoard;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
 
 import java.util.*;
-import java.util.stream.Stream;
 
-import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
-import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
-import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.O;
-import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.X;
+import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
+import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.O;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.X;
 
 /**
  * MinMaxStrategy represents the AI's ability to play a perfect game of TicTacToe.

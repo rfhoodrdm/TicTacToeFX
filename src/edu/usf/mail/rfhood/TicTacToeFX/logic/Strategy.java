@@ -1,9 +1,9 @@
-package edu.usf.mail.rfhood.logic;
+package edu.usf.mail.rfhood.TicTacToeFX.logic;
 
-import edu.usf.mail.rfhood.state.GameState;
-import edu.usf.mail.rfhood.logic.exception.GameAIException;
-import edu.usf.mail.rfhood.logic.exception.NoAvailableMovesException;
-import edu.usf.mail.rfhood.logic.exception.PlayerCannotMoveNowException;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.GameAIException;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.NoAvailableMovesException;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.PlayerCannotMoveNowException;
 
 import java.util.ArrayList;
 import java.util.HashSet;

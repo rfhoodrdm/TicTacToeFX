@@ -1,8 +1,7 @@
-package edu.usf.mail.rfhood.state;
+package edu.usf.mail.rfhood.TicTacToeFX.state;
 
-import edu.usf.mail.rfhood.logic.GameAI;
+import edu.usf.mail.rfhood.TicTacToeFX.logic.GameAI;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class GameState {
