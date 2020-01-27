@@ -2,6 +2,7 @@ package edu.usf.mail.rfhood.TicTacToeFX.main;
 
 import edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +15,11 @@ public class Main extends Application {
                                 Fields and Constants
        ************************************************************** */
 
-    SceneDirectory sceneDirectory;      //static scene directory reference.
+    SceneDirectory sceneDirectory;                //scene directory reference.
+
     public static final int APP_HEIGHT = 600;
     public static final int APP_WIDTH = 600;
+    public static HostServices hostServices;      //static host services reference, for opening web pages.
 
 
     /* **************************************************************
@@ -29,6 +32,9 @@ public class Main extends Application {
      */
     @Override
     public void init() throws Exception {
+        //assign the reference to host services, so that our controllers can use it.
+        hostServices = getHostServices();
+
         //load and set up our scenes.
         sceneDirectory = SceneDirectory.getInstance();
 
