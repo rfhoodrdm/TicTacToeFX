@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -53,6 +54,10 @@
       </GridPane>
    </bottom>
    <center>
-      <Canvas fx:id="gamelogoCanvas" height="475.0" width="600.0" BorderPane.alignment="CENTER" />
+      <ImageView fitHeight="450.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" styleClass="splashLogo" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../images/TicTacToeFX%20Logo.png" />
+         </image>
+      </ImageView>
    </center>
 </BorderPane>
