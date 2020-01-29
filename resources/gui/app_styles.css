@@ -11,6 +11,14 @@
 
 
 /*
+    Style for the image on the splash screen.
+*/
+.splashLogo {
+    -fx-background-color: transparent;
+}
+
+
+/*
     Styles for Game Labels
 */
 
@@ -31,6 +39,10 @@
 .o_player_human_or_cpu_label {
     -fx-text-fill: blue;
     -fx-font-size: 18;
+}
+
+.hyperlink {
+    -fx-font-weight:bold;
 }
 
 

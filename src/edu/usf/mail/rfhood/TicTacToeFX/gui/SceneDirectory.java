@@ -1,4 +1,4 @@
-package edu.usf.mail.rfhood;
+package edu.usf.mail.rfhood.TicTacToeFX.gui;
 
 import javafx.scene.Scene;
 

@@ -1,4 +1,4 @@
-package edu.usf.mail.rfhood.state;
+package edu.usf.mail.rfhood.TicTacToeFX.state;
 
 import java.util.HashSet;
 import java.util.Set;

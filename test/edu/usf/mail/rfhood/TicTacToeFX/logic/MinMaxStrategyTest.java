@@ -1,15 +1,14 @@
-package edu.usf.mail.rfhood.logic;
+package edu.usf.mail.rfhood.TicTacToeFX.logic;
 
-import edu.usf.mail.rfhood.state.GameBoard;
-import edu.usf.mail.rfhood.state.GameState;
+import edu.usf.mail.rfhood.TicTacToeFX.state.GameBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
-import static edu.usf.mail.rfhood.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
-import static edu.usf.mail.rfhood.state.GameState.POSITIONS.*;
-import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.O;
-import static edu.usf.mail.rfhood.state.GameState.POSITION_STATE.X;
+import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
+import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITIONS.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.O;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.X;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MinMaxStrategyTest {

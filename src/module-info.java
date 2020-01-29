@@ -4,9 +4,11 @@ module Fun.Projects {
     requires javafx.controls;
     requires java.logging;
 
+    opens gui;
 
+    opens edu.usf.mail.rfhood.TicTacToeFX.state;
+    opens edu.usf.mail.rfhood.TicTacToeFX.gui;
+    opens edu.usf.mail.rfhood.TicTacToeFX.logic;
+    opens edu.usf.mail.rfhood.TicTacToeFX.main;
 
-    opens edu.usf.mail.rfhood;
-    opens edu.usf.mail.rfhood.logic;
-    opens edu.usf.mail.rfhood.main;
 }
