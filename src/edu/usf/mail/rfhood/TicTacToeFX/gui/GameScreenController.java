@@ -1,5 +1,6 @@
 package edu.usf.mail.rfhood.TicTacToeFX.gui;
 
+import edu.usf.mail.rfhood.TicTacToeFX.gui.audio.SFXManager;
 import edu.usf.mail.rfhood.TicTacToeFX.logic.GameAI;
 import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.GameAIException;
 import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 
 import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.TITLE_SCENE;
 import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.gui.audio.SFXManager.SFX.*;
 
 public class GameScreenController {
 
@@ -49,12 +51,14 @@ public class GameScreenController {
     @FXML private Slider cpuDifficultySlider;
 
     private Button[][] gameBoardPositionButtons;    //references to position buttons.
-    private GameState gameState;
-    private GameAI gameAI;
+    private GameState gameState;                    //reference to the current game's state.
+    private GameAI gameAI;                          //reference to the AI component.
+    private SFXManager sfxManager;                  //reference to the SFX Manager component.
 
     public static final String X_TERRITORY_STYLE_CLASS = "x_territory";     //style class references
     public static final String O_TERRITORY_STYLE_CLASS = "o_territory";
     public static final String VICTORY_TERRITORY_STYLE_CLASS = "victory_territory";
+
 
     /* **************************************************************
                                 Constructor/Initialization
@@ -81,8 +85,10 @@ public class GameScreenController {
         gameBoardPositionButtons[2][2] = boardPosition22;
 
 
-        //create a new GameAI logic instance.
+        //create references to other game components, such as
+        //a new GameAI logic instance and the sound effects manager.
         gameAI = new GameAI();
+        sfxManager = SFXManager.getInstance();
 
         //make a new game state and initialize it. Then call the logic to advance the game state.
         humanXRadioButton.setSelected(true);
@@ -158,6 +164,7 @@ public class GameScreenController {
     private void advanceGameState()  {
         //move on to the next logical game state. X's turn changes to O's turn, etc.
         gameState.advanceGamePhase();
+        playSFXForMove(gameState);
         updateGUI();
 
         //now the CPU makes moves for computer controlled sides.
@@ -185,6 +192,7 @@ public class GameScreenController {
 
                     //move to the next turn and update the game state.
                     gameState.advanceGamePhase();
+                    playSFXForMove(gameState);
                     Platform.runLater( () -> updateGUI() );        //queue gui update on application thread.
                 }
 
@@ -264,6 +272,71 @@ public class GameScreenController {
     @FXML void handlePosition20ButtonClick(ActionEvent event) { handlePlayerMove(2,0); }
     @FXML void handlePosition21ButtonClick(ActionEvent event) { handlePlayerMove(2,1); }
     @FXML void handlePosition22ButtonClick(ActionEvent event) { handlePlayerMove(2,2); }
+
+
+    /**
+     * If a sound effect is called for after a move, determine which one it should be, and play it accordingly.
+     * ** NOTE: Should only be called AFTER the game state has been advanced.
+     * @param gameState
+     */
+    private void playSFXForMove( GameState gameState ) {
+        //First, determine if we are in an end-game state: one side has victory, or else there is a draw.
+        //We should play a fanfare if one side has attained victory.
+        //Only play defeat if the player lost vs playing a computer.
+        boolean drawGame = gameState.getGamePhase().equals(GameState.GAME_PHASE.GAME_OVER_DRAW);
+        boolean victoryGame = gameState.getGamePhase().equals(GameState.GAME_PHASE.GAME_OVER_X_WINS)    ||
+            gameState.getGamePhase().equals(GameState.GAME_PHASE.GAME_OVER_O_WINS);
+        boolean playDefeatFanfare = ( gameState.isoPlayerControlled()  &&
+                                     !gameState.isxPlayerControlled()  &&
+                                      gameState.getGamePhase().equals(GameState.GAME_PHASE.GAME_OVER_X_WINS) )    ||
+                                   ( !gameState.isoPlayerControlled()  &&
+                                      gameState.isxPlayerControlled()  &&
+                                      gameState.getGamePhase().equals(GameState.GAME_PHASE.GAME_OVER_O_WINS));
+
+        //otherwise, the move number can be found by counting the number of marks played. (9 - # of empty spaces)
+        int moveNumber = 9 - gameState.getUnclaimedPositions().size();
+
+        //decide on the sound to play.
+        if ( playDefeatFanfare ) {
+            sfxManager.playSFX(GAME_OVER_DEFEAT);
+        } else if ( victoryGame ) {
+            sfxManager.playSFX(GAME_OVER_VICTORY);
+        } else if ( drawGame ) {
+            sfxManager.playSFX(GAME_OVER_DRAW);
+        } else {
+            //play a plain move number sound.
+            //we are only concerned for moves 1 to 8, because the game is guaranteed to be over at turn 9.
+            switch (moveNumber){
+                case 1:
+                    sfxManager.playSFX(MOVE_1);
+                    break;
+                case 2:
+                    sfxManager.playSFX(MOVE_2);
+                    break;
+                case 3:
+                    sfxManager.playSFX(MOVE_3);
+                    break;
+                case 4:
+                    sfxManager.playSFX(MOVE_4);
+                    break;
+                case 5:
+                    sfxManager.playSFX(MOVE_5);
+                    break;
+                case 6:
+                    sfxManager.playSFX(MOVE_6);
+                    break;
+                case 7:
+                    sfxManager.playSFX(MOVE_7);
+                    break;
+                case 8:
+                    sfxManager.playSFX(MOVE_8);
+                    break;
+                default:
+                    logger.severe("Was asked to play a move sound for a move number out of range!");
+                    break;
+            }
+        }
+    }
 
 
     /* **************************************************************
