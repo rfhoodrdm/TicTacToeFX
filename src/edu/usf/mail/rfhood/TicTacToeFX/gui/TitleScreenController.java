@@ -10,7 +10,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.GAME_BOARD_SCENE;
+import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.INSTRUCTIONS_SCENE;
 
 public class TitleScreenController {
 

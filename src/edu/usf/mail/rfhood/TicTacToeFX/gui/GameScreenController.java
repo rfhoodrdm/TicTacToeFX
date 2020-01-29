@@ -18,8 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.TITLE_SCENE;
-import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.*;
 import static edu.usf.mail.rfhood.TicTacToeFX.gui.audio.SFXManager.SFX.*;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.O;
+import static edu.usf.mail.rfhood.TicTacToeFX.state.GameState.POSITION_STATE.X;
 
 public class GameScreenController {
 

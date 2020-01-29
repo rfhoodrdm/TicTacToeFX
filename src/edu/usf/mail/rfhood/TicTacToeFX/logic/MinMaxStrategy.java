@@ -6,7 +6,10 @@ import edu.usf.mail.rfhood.TicTacToeFX.logic.exception.NoAvailableMovesException
 import edu.usf.mail.rfhood.TicTacToeFX.state.GameBoard;
 import edu.usf.mail.rfhood.TicTacToeFX.state.GameState;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MAX;
 import static edu.usf.mail.rfhood.TicTacToeFX.logic.MinMaxStrategy.MIN_OR_MAX.MIN;
@@ -162,62 +165,6 @@ public class MinMaxStrategy extends Strategy {
         }
 
     }
-
-
-//    public int scoreGameBoard(GameBoard gameBoard, GameState.POSITION_STATE playerMarker, boolean isTurnPlayer) {
-//        //recursive base cases: terminal states
-//        //if the present board is a victory board for the current player, return 1.
-//        //else if a victory for the opponent, return -1.
-//        //failing both of these, return 0 if the game is a draw.
-//        GameState.POSITION_STATE opponentMarker = determineOpponentMarker(playerMarker);
-//        boolean noMovesLeft = ( 0  == gameBoard.getUnclaimedPositions().size() );
-//        if ( gameBoard.checkForVictory(playerMarker) ) {
-//            return 1;
-//        } else if ( gameBoard.checkForVictory(opponentMarker) ) {
-//            return -1;
-//        } else if ( noMovesLeft ) {
-//            return 0;
-//        }
-//
-//
-//        //if we're not in a terminal state, then score the possible moves according to the utility and
-//        //whether or not the turn player is to make the move or not.
-//        if ( isTurnPlayer ) {
-//
-//            //if the turn player is the one making the move being evaluated, find maximal score.
-//            int bestBoardScore = Integer.MIN_VALUE;
-//            for ( GameState.POSITIONS moveToMake: gameBoard.getUnclaimedPositions() ) {
-//                //clone the game board, make the tentative move, and test the move by scoring the new board.
-//                //if the score is a new best we've seen, remember it.
-//                GameBoard tentativeGameBoard = gameBoard.clone();
-//                tentativeGameBoard.setPositionState( moveToMake, playerMarker);
-//                int tentativeMoveScore = scoreGameBoard( tentativeGameBoard, opponentMarker, false);
-//                if ( tentativeMoveScore > bestBoardScore ) {
-//                    bestBoardScore = tentativeMoveScore;
-//                }
-//            }
-//
-//            //whatever the best score we've seen, that's the rating we assign to the given game board for current turn player.
-//            return bestBoardScore;
-//        } else {
-//
-//            //if the opposing player is the one making the move being evaluated, find the minimum score.
-//            int worstBoardScore = Integer.MAX_VALUE;
-//            for ( GameState.POSITIONS moveToMake: gameBoard.getUnclaimedPositions() ) {
-//                //clone the game board, make the tentative move, and test the move by scoring the new board.
-//                //if the score is a new worse we've seen, remember it.
-//                GameBoard tentativeGameBoard = gameBoard.clone();
-//                tentativeGameBoard.setPositionState( moveToMake, opponentMarker);
-//                int tentativeMoveScore = -1 * scoreGameBoard( tentativeGameBoard, playerMarker, true);
-//                if ( tentativeMoveScore < worstBoardScore ) {
-//                    worstBoardScore = tentativeMoveScore;
-//                }
-//            }
-//
-//            //whatever the worst score we've seen, that's the rating we assign to the given game board for the opponent player.
-//            return worstBoardScore;
-//        }
-//    }
 
     /**
      * Are we minimizing or maximizing the score?

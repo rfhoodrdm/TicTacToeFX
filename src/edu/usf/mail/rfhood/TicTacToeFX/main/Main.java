@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import static edu.usf.mail.rfhood.TicTacToeFX.gui.SceneDirectory.SCENE_NAME.*;
 
 public class Main extends Application {
@@ -56,7 +57,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.setTitle("Simple TicTacToe");
+        primaryStage.setTitle("TicTacToeFX");
         primaryStage.setScene(sceneDirectory.getScene(TITLE_SCENE));
         primaryStage.show();
     }
