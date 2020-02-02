@@ -1,17 +1,18 @@
-module Fun.Projects {
+module edu.usf.mail.rfhood.TicTacToeFX {
 
+    //dependencies
     requires javafx.fxml;
     requires javafx.controls;
     requires javafx.media;
     requires java.logging;
 
+    //resources
     opens gui;
     opens audio;
     opens images;
 
-    opens edu.usf.mail.rfhood.TicTacToeFX.state;
+    //required for JavaFX reflection.
     opens edu.usf.mail.rfhood.TicTacToeFX.gui;
-    opens edu.usf.mail.rfhood.TicTacToeFX.logic;
     opens edu.usf.mail.rfhood.TicTacToeFX.main;
 
 }
