@@ -19,7 +19,7 @@ https://gluonhq.com/products/javafx/
 
 Also, **JUnit** was leveraged to test the game's more complex bits of logic. IntelliJ was kind enough to organize this dependency for me. The version recommended at the time was 5.3.
 
-### Build Proceedure
+### Build Procedure
 This process was designed to work with IntelliJ. You may have to adapt it somewhat if you use another IDE, but I have tried to keep things to a minimum of complexity in any case.
 
 1) Build the project, thereby compiling the source code into class files.
