@@ -55,6 +55,7 @@ public class GameScreenController {
     private GameState gameState;                    //reference to the current game's state.
     private GameAI gameAI;                          //reference to the AI component.
     private SFXManager sfxManager;                  //reference to the SFX Manager component.
+    private Task computerMoveTask;                  //refernece to the Task that makes moves for the computer.
 
     public static final String X_TERRITORY_STYLE_CLASS = "x_territory";     //style class references
     public static final String O_TERRITORY_STYLE_CLASS = "o_territory";
@@ -173,28 +174,31 @@ public class GameScreenController {
         //If only one side is CPU controlled, the computer makes the move and control reverts back to the human immediately.
         //If both are CPU controlled, then the computer keeps making turns until the game is done.
         //make a new independent thread task to calculate the computer's move, and update the gui accordingly.
-        Task computerMoveTask = new Task<Void>() {
+        computerMoveTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
 
                 //keep going until the computer is done. E.g. It is time for a human to move, or else the game is over.
                 while ( gameState.isComputerTurn() ) {
                     try {
+                        //pick the move to make.
                         Platform.runLater( () -> gameBoardActiveStatusIndicatorLabel.setText("Thinking...") );      //queue status update on gui thread.
                         Thread.sleep(1000);
                         gameAI.makeComputerMove(gameState);
+
+                        //move to the next turn and update the game state.
+                        gameState.advanceGamePhase();
+                        playSFXForMove(gameState);
+                        Platform.runLater( () -> updateGUI() );        //queue gui update on application thread.
                     } catch (GameAIException e) {
                         //report the error message. Then invalidate the game so the loop will exit.
                         logger.log(Level.SEVERE, "Game exception occurred: " + e.getMessage() );
                         gameState.tilt();
                     } catch (InterruptedException e) {
-                        //don't care.
+                        //if we're interrupted, take it as a sign that we're done playing this game.
+                        logger.info("Received a request to stop making moves.");
+                        return null;
                     }
-
-                    //move to the next turn and update the game state.
-                    gameState.advanceGamePhase();
-                    playSFXForMove(gameState);
-                    Platform.runLater( () -> updateGUI() );        //queue gui update on application thread.
                 }
 
                 return null;
@@ -245,6 +249,9 @@ public class GameScreenController {
 
     @FXML
     void handleResetGameButtonClick(ActionEvent event) {
+        //first, if there is cpu AI task running for the current game, we need to stop it.
+        computerMoveTask.cancel();
+
         //get information about the new game from the gui.
         boolean xHumanPlayer = humanXRadioButton.isSelected();
         boolean oHumanPlayer = humanORadioButton.isSelected();
